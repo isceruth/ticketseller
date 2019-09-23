@@ -35,3 +35,5 @@ CREATE TABLE IF NOT EXISTS tickets
 );
 
 CREATE INDEX IF NOT EXISTS idx_tickets_id ON tickets(id);
+
+CREATE SEQUENCE IF NOT EXISTS seq start 100;
