@@ -1,8 +1,8 @@
-package team.components.cinema.repository;
+package team.components.cinema.model.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import team.components.cinema.model.User;
+import team.components.cinema.model.entity.User;
 
 import java.util.Optional;
 

@@ -1,8 +1,8 @@
-package team.components.cinema.service;
+package team.components.cinema.model.service;
 
 import org.springframework.stereotype.Service;
-import team.components.cinema.model.User;
-import team.components.cinema.repository.UserRepository;
+import team.components.cinema.model.entity.User;
+import team.components.cinema.model.repository.UserRepository;
 
 import java.util.NoSuchElementException;
 

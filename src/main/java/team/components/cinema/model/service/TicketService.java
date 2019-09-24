@@ -1,11 +1,11 @@
-package team.components.cinema.service;
+package team.components.cinema.model.service;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import team.components.cinema.dto.TicketDTO;
-import team.components.cinema.model.Ticket;
-import team.components.cinema.model.User;
-import team.components.cinema.repository.TicketRepository;
-import team.components.cinema.repository.UserRepository;
+import team.components.cinema.model.dto.TicketDTO;
+import team.components.cinema.model.entity.Ticket;
+import team.components.cinema.model.entity.User;
+import team.components.cinema.model.repository.TicketRepository;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -20,8 +20,8 @@ public class TicketService {
         this.userService = userService;
     }
 
-    public Iterable<Ticket> findAllTickets() {
-        return ticketRepository.findAll();
+    public Iterable<Ticket> findAllTickets(Specification<Ticket> specs) {
+        return ticketRepository.findAll(specs);
     }
 
     public Optional<Ticket> findTicketById(long id) {

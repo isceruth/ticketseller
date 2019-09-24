@@ -1,9 +1,9 @@
-package team.components.cinema.repository;
+package team.components.cinema.model.repository;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import team.components.cinema.model.Ticket;
+import team.components.cinema.model.entity.Ticket;
 
 import java.util.List;
 import java.util.Optional;

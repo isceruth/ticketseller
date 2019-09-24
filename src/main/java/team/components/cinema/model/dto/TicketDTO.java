@@ -1,7 +1,7 @@
-package team.components.cinema.dto;
+package team.components.cinema.model.dto;
 
-import team.components.cinema.model.Session;
-import team.components.cinema.model.User;
+import team.components.cinema.model.entity.Session;
+import team.components.cinema.model.entity.User;
 
 public class TicketDTO {
     private Long seat;

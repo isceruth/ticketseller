@@ -1,4 +1,4 @@
-package team.components.cinema.model;
+package team.components.cinema.model.entity;
 
 import org.postgresql.shaded.com.ongres.scram.common.util.Preconditions;
 

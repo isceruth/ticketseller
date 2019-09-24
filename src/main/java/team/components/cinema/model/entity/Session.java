@@ -1,4 +1,4 @@
-package team.components.cinema.model;
+package team.components.cinema.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
