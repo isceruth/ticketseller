@@ -17,10 +17,8 @@ public class TicketNearSeat implements Specification<Ticket> {
 
     @Override
     public Predicate toPredicate(Root<Ticket> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        if (seat == null) {
-            return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
-        }
-
-        return criteriaBuilder.between(root.get("seat"), seat - 2, seat + 2);
+        return seat == null
+                ? criteriaBuilder.isTrue(criteriaBuilder.literal(true))
+                : criteriaBuilder.between(root.get("seat"), seat - 1, seat + 1);
     }
 }

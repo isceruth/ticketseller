@@ -20,9 +20,9 @@ public class TicketIsNotClaimed implements Specification<Ticket> {
         if (required == null) {
             return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
         }
-        if (required) {
-            return criteriaBuilder.isNotNull(root.get("owner"));
-        }
-        return criteriaBuilder.isNull(root.get("owner"));
+
+        return required
+                ? criteriaBuilder.isNotNull(root.get("owner"))
+                : criteriaBuilder.isNull(root.get("owner"));
     }
 }

@@ -37,23 +37,6 @@ public class TicketController {
         return ticketService.findAllTickets(spec);
     }
 
-    /*  We can also use this syntax
-        @And({
-            @Spec(path = "firstName", spec = Like.class),
-            @Spec(path = "lastName", spec = Like.class),
-            @Spec(path = "status", spec = In.class)
-        })
-        interface CustomerSpec extends Specification<Customer> {
-        }
-
-        ...
-
-        @GetMapping
-        public Page<Customer> findCustomers(CustomerSpec customerSpec) {
-            return customerRepo.findAll(customerSpec);
-        }
-     */
-
     @DeleteMapping("{id}")
     void deleteTicket(@PathVariable long id) {
         ticketService.deleteTicketById(id);
