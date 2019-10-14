@@ -1,14 +1,14 @@
 package team.components.cinema.model.specification;
 
 import org.springframework.data.jpa.domain.Specification;
-import team.components.cinema.model.entity.Ticket;
+import team.components.cinema.model.entity.TicketAlpha;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-public class TicketIsNotClaimed implements Specification<Ticket> {
+public class TicketIsNotClaimed implements Specification<TicketAlpha> {
     private Boolean required;
 
     public TicketIsNotClaimed(Boolean required) {
@@ -16,7 +16,7 @@ public class TicketIsNotClaimed implements Specification<Ticket> {
     }
 
     @Override
-    public Predicate toPredicate(Root<Ticket> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(Root<TicketAlpha> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         if (required == null) {
             return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
         }

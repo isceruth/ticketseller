@@ -3,7 +3,7 @@ package team.components.cinema.model.service;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import team.components.cinema.model.dto.TicketDTO;
-import team.components.cinema.model.entity.Ticket;
+import team.components.cinema.model.entity.TicketAlpha;
 import team.components.cinema.model.entity.User;
 import team.components.cinema.model.repository.TicketRepository;
 
@@ -20,11 +20,11 @@ public class TicketService {
         this.userService = userService;
     }
 
-    public Iterable<Ticket> findAllTickets(Specification<Ticket> specs) {
+    public Iterable<TicketAlpha> findAllTickets(Specification<TicketAlpha> specs) {
         return ticketRepository.findAll(specs);
     }
 
-    public Optional<Ticket> findTicketById(long id) {
+    public Optional<TicketAlpha> findTicketById(long id) {
         return ticketRepository.findById(id);
     }
 
@@ -32,8 +32,8 @@ public class TicketService {
         ticketRepository.deleteById(id);
     }
 
-    public Ticket createTicket(TicketDTO ticket) {
-        Ticket newTicket = new Ticket.Builder()
+    public TicketAlpha createTicket(TicketDTO ticket) {
+        TicketAlpha newTicket = new TicketAlpha.Builder()
                 .setOwner(ticket.getOwner())
                 .setPrice(ticket.getPrice())
                 .setSeat(ticket.getSeat())
@@ -45,13 +45,13 @@ public class TicketService {
 
     public void changeOwner(long ticketId, long ownerId) {
         User user = userService.getUserById(ownerId);
-        Optional<Ticket> ticket = findTicketById(ticketId);
+        Optional<TicketAlpha> ticket = findTicketById(ticketId);
 
         if (!ticket.isPresent()) {
             throw new NoSuchElementException();
         }
 
-        Ticket ticketToUpdate = ticket.get();
+        TicketAlpha ticketToUpdate = ticket.get();
         ticketToUpdate.setOwner(user);
         ticketRepository.save(ticketToUpdate);
     }

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import team.components.cinema.model.dto.TicketDTO;
-import team.components.cinema.model.entity.Ticket;
+import team.components.cinema.model.entity.TicketAlpha;
 import team.components.cinema.model.service.TicketService;
 import team.components.cinema.model.specification.TicketIsNotClaimed;
 import team.components.cinema.model.specification.TicketNearSeat;
@@ -24,14 +24,14 @@ public class TicketController {
     }
 
     @GetMapping("{id}")
-    Ticket getTicketById(@PathVariable("id") long id) {
+    TicketAlpha getTicketById(@PathVariable("id") long id) {
         return ticketService.findTicketById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @GetMapping
-    Iterable<Ticket> getTickets(@RequestParam(value = "nearSeat", required = false) Long seat,
-                                @RequestParam(value = "isClaimed", required = false) Boolean claimed) {
-        Specification<Ticket> spec = new TicketNearSeat(seat)
+    Iterable<TicketAlpha> getTickets(@RequestParam(value = "nearSeat", required = false) Long seat,
+                                     @RequestParam(value = "isClaimed", required = false) Boolean claimed) {
+        Specification<TicketAlpha> spec = new TicketNearSeat(seat)
                                     .and(new TicketIsNotClaimed(claimed));
 
         return ticketService.findAllTickets(spec);
@@ -44,7 +44,7 @@ public class TicketController {
 
     @PostMapping
     ResponseEntity<Object> createTicket(@RequestBody TicketDTO ticket) {
-        Ticket newTicket = ticketService.createTicket(ticket);
+        TicketAlpha newTicket = ticketService.createTicket(ticket);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
                 .buildAndExpand(newTicket.getId()).toUri();
@@ -54,7 +54,7 @@ public class TicketController {
 
    @PutMapping("{id}")
     ResponseEntity<Object> updateTicket(@PathVariable long id, @RequestParam(name = "owner") long ownerId) {
-        Optional<Ticket> ticketForUpdate = ticketService.findTicketById(id);
+        Optional<TicketAlpha> ticketForUpdate = ticketService.findTicketById(id);
 
         if (!ticketForUpdate.isPresent()) {
             return ResponseEntity.notFound().build();
