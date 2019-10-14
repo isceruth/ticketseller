@@ -2,22 +2,19 @@ package team.components.cinema.model.dto;
 
 import team.components.cinema.model.entity.Session;
 import team.components.cinema.model.entity.User;
+import team.components.cinema.model.enums.CinemaName;
 
 public class TicketDTO {
     private Long seat;
-
-    private Long price;
 
     private User owner;
 
     private Session session;
 
+    private CinemaName cinema;
+
     public Long getSeat() {
         return seat;
-    }
-
-    public Long getPrice() {
-        return price;
     }
 
     public User getOwner() {
@@ -26,5 +23,9 @@ public class TicketDTO {
 
     public Session getSession() {
         return session;
+    }
+
+    public CinemaName getCinema() {
+        return cinema;
     }
 }
