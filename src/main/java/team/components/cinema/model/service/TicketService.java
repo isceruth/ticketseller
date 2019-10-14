@@ -2,13 +2,15 @@ package team.components.cinema.model.service;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import team.components.cinema.model.dto.SimpleTicket;
 import team.components.cinema.model.dto.TicketDTO;
 import team.components.cinema.model.entity.Ticket;
 import team.components.cinema.model.entity.User;
 import team.components.cinema.model.repository.TicketRepository;
+import team.components.cinema.model.util.SimpleTicketMapper;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketService implements TicketInformation {
@@ -61,5 +63,14 @@ public class TicketService implements TicketInformation {
         Ticket ticketToUpdate = ticket.get();
         ticketToUpdate.setOwner(user);
         ticketRepository.save(ticketToUpdate);
+    }
+
+    public Iterable<SimpleTicket> findAllSimpleTickets() {
+        List<SimpleTicket> tickets = new ArrayList<>();
+        for (Ticket ticket : findAllTickets()) {
+            tickets.add(SimpleTicketMapper.toSimpleTicket(ticket));
+        }
+
+        return tickets;
     }
 }

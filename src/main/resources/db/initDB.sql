@@ -1,11 +1,22 @@
+CREATE TABLE IF NOT EXISTS cinemas
+(
+    id SERIAL,
+    name TEXT NOT NULL,
+    address TEXT NOT NULL,
+    CONSTRAINT pk_cinemas PRIMARY KEY (id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_cinemas_id ON cinemas(id);
+
 CREATE TABLE IF NOT EXISTS sessions
 (
     id SERIAL,
-    cinema TEXT NOT NULL,
+    cinema_id INTEGER NOT NULL,
     movie TEXT NOT NULL,
     start_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     hall TEXT NOT NULL,
-    CONSTRAINT pk_sessions PRIMARY KEY (id)
+    CONSTRAINT pk_sessions PRIMARY KEY (id),
+    FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
 );
 
 CREATE INDEX IF NOT EXISTS idx_sessions_id ON sessions(id);
@@ -27,6 +38,7 @@ CREATE TABLE IF NOT EXISTS tickets
     id SERIAL,
     place SMALLINT NOT NULL,
     price SMALLINT NOT NULL,
+    premium BOOLEAN NOT NULL,
     owner_id INTEGER,
     session_id INTEGER,
     CONSTRAINT pk_tickets PRIMARY KEY (id),

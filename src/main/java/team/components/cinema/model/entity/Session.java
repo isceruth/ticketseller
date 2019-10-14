@@ -1,9 +1,6 @@
 package team.components.cinema.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,8 +11,8 @@ public class Session {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "cinema")
-    private String cinema;
+    @ManyToOne
+    private Cinema cinema;
 
     @Column(name = "movie")
     private String movie;
@@ -34,11 +31,11 @@ public class Session {
         this.id = id;
     }
 
-    public String getCinema() {
+    public Cinema getCinema() {
         return cinema;
     }
 
-    public void setCinema(String cinema) {
+    public void setCinema(Cinema cinema) {
         this.cinema = cinema;
     }
 

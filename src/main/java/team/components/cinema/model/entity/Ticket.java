@@ -31,6 +31,9 @@ public final class Ticket {
     @Column(name = "price")
     private Long price;
 
+    @Column(name = "premium")
+    private Boolean premium;
+
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
@@ -51,6 +54,10 @@ public final class Ticket {
         return price;
     }
 
+    public Boolean getPremium() {
+        return premium;
+    }
+
     public User getOwner() {
         return owner;
     }
@@ -68,6 +75,7 @@ public final class Ticket {
         private Long price;
         private User owner;
         private Session session;
+        private Boolean premium;
 
         public Builder setSeat(long seat) {
             this.seat = seat;
@@ -81,6 +89,11 @@ public final class Ticket {
 
         public Builder setOwner(User user) {
             this.owner = user;
+            return this;
+        }
+
+        public Builder setPremium(Boolean premium) {
+            this.premium = premium;
             return this;
         }
 

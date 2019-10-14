@@ -7,7 +7,7 @@
 
 2) Open psql and create the TicketSeller database:
 
-CREATE DATABASE ticketseller
+CREATE DATABASE ticketseller_second
     WITH
     OWNER = postgres
     ENCODING = 'UTF8'
