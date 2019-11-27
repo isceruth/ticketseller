@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class TicketService {
+public class TicketService implements TicketInformation {
     private final TicketRepository ticketRepository;
     private final UserService userService;
 
@@ -20,10 +20,17 @@ public class TicketService {
         this.userService = userService;
     }
 
+    @Override
+    public Iterable<Ticket> findAllTickets() {
+        return ticketRepository.findAll();
+    }
+
+    @Override
     public Iterable<Ticket> findAllTickets(Specification<Ticket> specs) {
         return ticketRepository.findAll(specs);
     }
 
+    @Override
     public Optional<Ticket> findTicketById(long id) {
         return ticketRepository.findById(id);
     }
