@@ -1,7 +1,10 @@
 package team.components.cinema.model.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import team.components.cinema.model.dto.PagedSimpleTicketsDTO;
 import team.components.cinema.model.dto.SimpleTicket;
 import team.components.cinema.model.dto.TicketDTO;
 import team.components.cinema.model.entity.Ticket;
@@ -65,12 +68,17 @@ public class TicketService implements TicketInformation {
         ticketRepository.save(ticketToUpdate);
     }
 
-    public Iterable<SimpleTicket> findAllSimpleTickets() {
-        List<SimpleTicket> tickets = new ArrayList<>();
-        for (Ticket ticket : findAllTickets()) {
-            tickets.add(SimpleTicketMapper.toSimpleTicket(ticket));
-        }
+    public PagedSimpleTicketsDTO findAllSimpleTickets(Pageable pageable) {
+        Page<Ticket> page = ticketRepository.findAll(pageable);
 
-        return tickets;
+        Map<Long, Long> priceListMap = page.get()
+                .collect(Collectors.toMap(Ticket::getId, Ticket::getPrice));
+
+        return PagedSimpleTicketsDTO.builder()
+                .currentPage((long) pageable.getPageNumber())
+                .totalPages((long) page.getTotalPages())
+                .pageSize((long) pageable.getPageSize())
+                .results(priceListMap)
+                .build();
     }
 }
