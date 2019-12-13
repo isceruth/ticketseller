@@ -1,6 +1,8 @@
 package team.priceservercomponents.cinema.model.service;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import team.priceservercomponents.cinema.model.dto.PagedPriceListDto;
 import team.priceservercomponents.cinema.model.entity.Ticket;
 
 import java.util.Optional;
@@ -15,4 +17,8 @@ public interface TicketInformation {
     }
 
     Optional<Ticket> findTicketById(long id);
+
+    default PagedPriceListDto findAllSimpleTickets(Pageable pageable) {
+        throw new UnsupportedOperationException();
+    }
 }

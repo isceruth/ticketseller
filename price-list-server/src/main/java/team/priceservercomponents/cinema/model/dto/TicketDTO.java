@@ -2,8 +2,6 @@ package team.priceservercomponents.cinema.model.dto;
 
 import team.priceservercomponents.cinema.model.entity.Session;
 import team.priceservercomponents.cinema.model.entity.User;
-import team.searchcomponents.cinema.model.entity.Session;
-import team.searchcomponents.cinema.model.entity.User;
 
 public class TicketDTO {
     private Long seat;

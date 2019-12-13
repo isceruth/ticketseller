@@ -27,9 +27,4 @@ public class SearchServerController {
 
         return ticketService.findAllTickets(spec);
     }
-
-    @GetMapping("all")
-    Iterable<Ticket> getAllTickets() {
-        return ticketService.findAllTickets();
-    }
 }

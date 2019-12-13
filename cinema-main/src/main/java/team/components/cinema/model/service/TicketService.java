@@ -1,5 +1,7 @@
 package team.components.cinema.model.service;
 
+import org.json.JSONObject;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import team.components.cinema.model.dto.TicketDTO;
@@ -21,12 +23,14 @@ public class TicketService implements TicketInformation {
     }
 
     @Override
+    @Cacheable(value = "tickets")
     public Iterable<Ticket> findAllTickets() {
         return ticketRepository.findAll();
     }
 
     @Override
-    public Iterable<Ticket> findAllTickets(Specification<Ticket> specs) {
+    @Cacheable(value = "tickets", key = "#params.toString()")
+    public Iterable<Ticket> findAllTickets(Specification<Ticket> specs, JSONObject params) {
         return ticketRepository.findAll(specs);
     }
 
