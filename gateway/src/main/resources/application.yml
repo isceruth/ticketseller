@@ -1,0 +1,8 @@
+zuul:
+  routes:
+    service-a:
+      path: /list/**
+      serviceId: main-service
+    service-b:
+      path: /book/**
+      serviceId: booking-service

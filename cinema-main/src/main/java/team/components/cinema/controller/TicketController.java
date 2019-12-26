@@ -34,7 +34,7 @@ public class TicketController {
         Specification<Ticket> spec = new TicketNearSeat(seat)
                                     .and(new TicketIsNotClaimed(claimed));
 
-        return ticketService.findAllTickets(spec);
+        return ticketService.findAllTickets(spec, null);
     }
 
     @DeleteMapping("{id}")

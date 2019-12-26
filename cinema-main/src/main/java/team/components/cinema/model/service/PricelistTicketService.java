@@ -1,6 +1,6 @@
 package team.components.cinema.model.service;
 
-import org.json.JSONArray;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,10 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import team.components.cinema.model.entity.Ticket;
 import team.components.cinema.model.util.mapper.RemoteTicketMapper;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -32,6 +29,7 @@ public class PricelistTicketService implements TicketInformation {
 
     @Override
     @Cacheable(value = "pricelistServiceTickets")
+    @HystrixCommand(fallbackMethod = "noTicketsCanBeFound")
     public Iterable<Ticket> findAllTickets() {
         String finalUrl = url + "/price-list";
 
@@ -54,8 +52,13 @@ public class PricelistTicketService implements TicketInformation {
         return mapPriceListToTicketList(result.getJSONObject("results"));
     }
 
+    public Iterable<Ticket> noTicketsCanBeFound() {
+        return new ArrayList<>();
+    }
+
     @Override
     @Cacheable(value = "pricelistServiceTickets", key = "#params.toString()")
+    @HystrixCommand(fallbackMethod = "noTicketsCanBeFoundSpecs")
     public Iterable<Ticket> findAllTickets(Specification<Ticket> specs, JSONObject params) {
         Iterable<Ticket> result = findAllTickets();
 
@@ -63,6 +66,10 @@ public class PricelistTicketService implements TicketInformation {
                 .filter(ticket -> params.get("nearSeat") == null || Math.abs(ticket.getSeat() - params.getInt("nearSeat")) < 2)
                 .filter(ticket -> params.get("isClaimed") == null || params.getBoolean("isClaimed") == (ticket.getOwner() != null))
                 .collect(Collectors.toList());
+    }
+
+    public Iterable<Ticket> noTicketsCanBeFoundSpecs(Specification<Ticket> specs, JSONObject params) {
+        return new ArrayList<>();
     }
 
     @Override
