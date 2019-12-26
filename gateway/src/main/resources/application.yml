@@ -6,3 +6,8 @@ zuul:
     service-b:
       path: /book/**
       serviceId: booking-service
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: "${HOST}"

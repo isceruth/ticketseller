@@ -1,0 +1,120 @@
+version: '2.2'
+services:
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: ./eureka-server/
+      dockerfile: DockerfileEurekaServer
+    image: eureka-server:latest
+    expose:
+      - 8761
+    ports:
+      - 8761:8761
+    networks:
+      - ticketseller
+    environment:
+      - HOST=192.168.0.107
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+    networks:
+      - ticketseller
+  gateway:
+    container_name: gateway
+    build:
+      context: ./gateway/
+      dockerfile: DockerfileGateway
+    image: gateway:latest
+    expose:
+      - 8087
+    ports:
+      - 8087:8087
+    networks:
+      - ticketseller
+    depends_on:
+      - db
+      - eureka-server
+    environment:
+      - HOST=192.168.0.106
+  cinema-main:
+    container_name: cinema-main
+    build:
+      context: ./cinema-main/
+      dockerfile: DockerfileMain
+    image: cinema-main:latest
+    expose:
+      - 8089
+    ports:
+      - 8089:8089
+    networks:
+      - ticketseller
+    depends_on:
+      - db
+      - eureka-server
+      - search-server
+      - price-list-server
+    environment:
+      - HOST=192.168.0.109
+  search-server:
+    container_name: search-server
+    build:
+      context: ./search-server/
+      dockerfile: DockerfileSearchServer
+    image: search-server:latest
+    expose:
+      - 8099
+    ports:
+      - 8099:8099
+    networks:
+      - ticketseller
+    depends_on:
+      - db
+      - eureka-server
+    environment:
+      - HOST=192.168.0.110
+  price-list-server:
+    container_name: price-list-server
+    build:
+      context: ./price-list-server/
+      dockerfile: DockerfilePricelistServer
+    image: gateway:latest
+    expose:
+      - 8098
+    ports:
+      - 8098:8098
+    networks:
+      - ticketseller
+    depends_on:
+      - db
+      - eureka-server
+    environment:
+      - HOST=192.168.0.111
+  booking-service:
+    container_name: booking-service
+    build:
+      context: ./booking-service/
+      dockerfile: DockerfileBooking
+    image: gateway:latest
+    expose:
+      - 8086
+    ports:
+      - 8086:8086
+    networks:
+      - ticketseller
+    depends_on:
+      - db
+      - eureka-server
+    environment:
+      - HOST=192.168.0.112
+networks:
+  ticketseller:
+    driver: bridge
+volumes:
+  db-data:
+    driver: local
