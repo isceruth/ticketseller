@@ -1,0 +1,51 @@
+# java.util.Date implementation
+scalar Date
+
+# java.time.LocalDate implementation
+scalar LocalDate
+
+# java.time.LocalDateTime implementation
+scalar LocalDateTime
+
+# java.time.LocalTime implementation
+scalar LocalTime
+
+# javal.time.OffsetDateTime implementation
+scalar OffsetDateTime
+
+type User {
+    id: ID!
+    firstName: String
+    lastName: String
+    phoneNumber: String
+    email: String
+}
+
+type Session {
+    id: ID!
+    cinema: String
+    movie: String
+    startTime: LocalDateTime
+    hall: String
+}
+
+type Ticket {
+    id: ID!
+    seat: Int
+    price: Int
+    owner: User
+    session: Session
+}
+
+input TicketDeleteInput {
+    id: ID!
+}
+
+type Query {
+    ticketById(id: ID): Ticket
+    tickets: [Ticket]
+}
+
+type Mutation {
+    deleteTicket(input: TicketDeleteInput): Boolean
+}

@@ -11,11 +11,6 @@ import team.components.cinema.model.service.TicketInformation;
 import team.components.cinema.model.specification.TicketIsNotClaimed;
 import team.components.cinema.model.specification.TicketNearSeat;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 @RestController
 @RequestMapping("tickets")
 public class AggregationController {
